@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import * as Blockly from 'blockly';
 import 'blockly/javascript';
 import * as JavaScript from 'blockly/javascript';
@@ -8,7 +8,13 @@ import * as JavaScript from 'blockly/javascript';
   templateUrl: './blockly.component.html',
   styleUrls: ['./blockly.component.css']
 })
+
 export class BlocklyComponent implements OnInit {
+  @HostListener('document:keyup', ['$event'])
+  documentClick() {
+    this.codeUpdate();
+  }
+
   constructor() { }
 
   private workspace? : Blockly.WorkspaceSvg;
@@ -17,14 +23,16 @@ export class BlocklyComponent implements OnInit {
     this.workspace = Blockly.inject(
       'blocklyDiv',
       {
-        /*readOnly: false,
+        // @ts-ignore
+        readOnly: false,
         trashcan: true,
         move: {
           scrollbars: true,
           drag: true,
           wheel: true
-        },*/
-        // @ts-ignore
+        },
+        /*renderer: "zelos",
+        zoom: { startScale: 0.75 },*/
         toolbox: `
                 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
             <category name="Logic" categorystyle="logic_category">
@@ -367,10 +375,15 @@ export class BlocklyComponent implements OnInit {
           `
       }
     );
+
+    this.workspace.addChangeListener(this.codeUpdate);
+    var flyoutWorkspace = this.workspace.getFlyout().getWorkspace();
+    flyoutWorkspace.addChangeListener(this.codeUpdate);
   }
 
-  myUpdateFunction() {
+  codeUpdate() {
     const code = Blockly.JavaScript.workspaceToCode(this.workspace);
     document.getElementById("codeArea")!.textContent = code;
+    this.workspace!.addChangeListener(this.codeUpdate);
   }
 }

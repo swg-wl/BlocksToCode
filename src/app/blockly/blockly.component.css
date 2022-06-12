@@ -1,28 +1,24 @@
-div {
+* {
   display: block;
 }
 
 #blocklyDiv {
   height: 100%;
-  width: 70%;
-  position: absolute;
+  width: 69%;
   bottom: 0;
+  position: absolute;
 }
 
 #codeDiv {
   right: 0px;
   top: 0px;
   bottom: 0px;
-  width: 29%;
+  width: 30%;
   background-color: white;
-  overflow: scroll;
+  overflow: auto;
   padding: 8px;
   box-shadow: 0 1px 4px rgb(0 0 0 / 37%);
   position: absolute;
-}
-
-button {
-  right: 0px;
 }
 
 pre {

@@ -10,7 +10,7 @@ import * as JavaScript from 'blockly/javascript';
 })
 
 export class BlocklyComponent implements OnInit {
-  @HostListener('document:keyup', ['$event'])
+  @HostListener('document:click', ['$event'])
   documentClick() {
     this.codeUpdate();
   }
@@ -377,8 +377,6 @@ export class BlocklyComponent implements OnInit {
     );
 
     this.workspace.addChangeListener(this.codeUpdate);
-    var flyoutWorkspace = this.workspace.getFlyout().getWorkspace();
-    flyoutWorkspace.addChangeListener(this.codeUpdate);
   }
 
   codeUpdate() {

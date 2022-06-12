@@ -96,7 +96,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/blockly/blockly_compressed.js",
+              "node_modules/blockly/javascript_compressed.js"
+            ]
           }
         }
       }

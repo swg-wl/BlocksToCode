@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import * as Blockly from 'blockly';
 import 'blockly/javascript';
-import * as JavaScript from 'blockly/javascript';
 
 @Component({
   selector: 'app-blockly',
@@ -10,17 +9,10 @@ import * as JavaScript from 'blockly/javascript';
 })
 
 export class BlocklyComponent implements OnInit {
-  @HostListener('document:click', ['$event'])
-  documentClick() {
-    this.codeUpdate();
-  }
-
   constructor() { }
 
-  private workspace? : Blockly.WorkspaceSvg;
-
   ngOnInit(): void {
-    this.workspace = Blockly.inject(
+    var workspace = Blockly.inject(
       'blocklyDiv',
       {
         // @ts-ignore
@@ -31,8 +23,6 @@ export class BlocklyComponent implements OnInit {
           drag: true,
           wheel: true
         },
-        /*renderer: "zelos",
-        zoom: { startScale: 0.75 },*/
         toolbox: `
                 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
             <category name="Logic" categorystyle="logic_category">
@@ -376,12 +366,12 @@ export class BlocklyComponent implements OnInit {
       }
     );
 
-    this.workspace.addChangeListener(this.codeUpdate);
-  }
+    var codeArea = document.getElementById('codeArea');
 
-  codeUpdate() {
-    const code = Blockly.JavaScript.workspaceToCode(this.workspace);
-    document.getElementById("codeArea")!.textContent = code;
-    this.workspace!.addChangeListener(this.codeUpdate);
+    workspace.addChangeListener(() =>
+    {
+      const code = Blockly.JavaScript.workspaceToCode(workspace);
+      codeArea!.textContent = code;
+    });
   }
 }

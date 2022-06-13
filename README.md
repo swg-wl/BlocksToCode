@@ -37,9 +37,9 @@ Simple visual code generator created with Google Blockly.
 
 * Windows
   ```sh
-  npm exec electron-packager ./dist  --platform=win32`
+  npm exec electron-packager ./dist  --platform=win32
   ```
 * MacOs
   ```sh
-  npm exec electron-packager ./dist  --platform=darwin`
+  npm exec electron-packager ./dist  --platform=darwin
   ```
